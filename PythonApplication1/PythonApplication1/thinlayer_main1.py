@@ -26,37 +26,58 @@ mm = len(L1)
 
 print('Length of L1 = ')
 print(mm)
-print('')
+
+#print('L1 = ')
+
+#        for aa in range(mm):        
+#        print(L1[aa])
+#        print('')
+
+
+#print('L2 = ')
+
+#        for bb in range(mm):          
+#        print(L2[bb])
+#        print('')
 
 
 no = 1.000
 
-Eini = np.array([[1],[0]])
-
-#Eini = np.identity(2)
 
 wlcol = np.zeros(nn)
-Pcol = np.zeros(nn)
+TPcol = np.zeros(nn)
 
 
 
 
-#for ii in range(nn):
+for ii in range(nn):
     
-#    wl = startwl + stepwl*ii
+    wl = startwl + stepwl*ii
 
-#    n1 = 1.463 + 0.003827/(wl**2) + 0.000/(wl**4)
-#    n2 = 2.1305 + 0.018499/(wl**2) + 0.00199850/(wl**4)
-#    ns = 1.6553 + 0.0086444/(wl**2) + 0.00081178/(wl**4)
+    n1 = 1.463 + 0.003827/(wl**2) + 0.000/(wl**4)
+    n2 = 2.1305 + 0.018499/(wl**2) + 0.00199850/(wl**4)
+    ns = 1.6553 + 0.0086444/(wl**2) + 0.00081178/(wl**4)
     
-#    wlcol[ii] = wl
+    wlcol[ii] = wl
+    Ein = np.array([[1],[0]])
 
-#        for jj in range(mm):
-    
-#            Eout1 = thinlayer_def.dielectric(wl,n1,n2,L1[jj],L2[jj])
+    for jj in range(mm):
+
+        th1 = L1[jj]
+        th2 = L2[jj]           
+
+        E_intermedate = Thinlayer_def.dielectric(wl, n1, n2, th1, th2, Ein)
+        Ein = E_intermedate
             
-#            Pcol[ii] = abs(Eout1[0,0])**2
+    TP1 = abs(E_intermedate[0,0])**2
+            
+    TPcol[ii] = TP1
 
+print('Wavelength = ')
+print(wlcol)
+
+print('Power = ')
+print(TPcol)
 
 
 
