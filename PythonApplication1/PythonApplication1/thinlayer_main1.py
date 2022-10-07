@@ -5,6 +5,7 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
+
 import Thinlayer_def
 
 
@@ -34,8 +35,8 @@ Eini = np.array([[1],[0]])
 
 #Eini = np.identity(2)
 
-wlcol = np.zeros(m)
-Pcol = np.zeros(m)
+wlcol = np.zeros(nn)
+Pcol = np.zeros(nn)
 
 
 
