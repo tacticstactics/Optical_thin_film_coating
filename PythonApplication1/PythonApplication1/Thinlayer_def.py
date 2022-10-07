@@ -1,5 +1,4 @@
-
-#thinlayer_def.py
+#Thinlayer_def.py
 
 import numpy as np
 import math
