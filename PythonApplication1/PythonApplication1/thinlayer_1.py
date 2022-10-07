@@ -1,6 +1,7 @@
 
 
 #thinlayer_1.py
+#2022/10/7
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -34,7 +35,7 @@ Tcol = np.zeros(m)
 outputPcol = np.zeros(m)
 
 
- for ii = 1:nn:
+for ii = 1:nn:
      wl = startwl + stepwl*ii
      
      n1 = 1.463 + 0.003827/(wl**2) + 0.000./(wl**4)
@@ -58,21 +59,36 @@ outputPcol = np.zeros(m)
    Told = Tnew;
   
    
-   detTold = det(Told) #det : determinent of matrix
-    
-   Told_2 = Told ./ Told(2,2)
-   Tcol = [Tcol;Told_2];
+
+   detTold = np.linalg.detTold
+
+   # MATLAB. detTold = det(Told) #det : determinent of matrix
    
+   
+
+   Told_2 = Told ./ Told(2,2)
+   
+
+   Tcol.append(Told_2)
+   #MATLAB. Tcol = [Tcol;];
+   
+
+
    output = Told_2 * input # this part bad  ????????
-   conjoutput = conj(output);
+
+   conjoutput = output.conjugte()
    
       
    outputP = output' * conjoutput;
-   outputPcol = [outputPcol;outputP];
+
+   outputPcol.append(outputP)
     
-   wlcol = [wlcol;1000*wl];
+   wlcol.append(wl)
    
 end
+
+
+
  Tcol
  
 fig1 = figure(1)
