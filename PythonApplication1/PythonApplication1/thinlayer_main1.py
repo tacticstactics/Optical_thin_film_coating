@@ -2,6 +2,7 @@
 
 #Thinlayer_main1.py
 #2022/10/7
+# Takeshi Ozeki, p.89 multilayer dielectric film filters
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -9,22 +10,23 @@ import matplotlib.pyplot as plt
 import Thinlayer_def
 
 
-startwl = 1.520 # [um]
-stepwl = 0.0005 # [um]
+startwl = 0.400 # [um]
+stepwl = 0.01 # [um]
 
-nn = 100 # number of sampling point
+nn = 256 # number of sampling point
 
+# Asssume quarter waelength
 # 1550nm * 0.25 --> 387.5 nm
 # 387.5nm/1.463 --> 264.866 nm
 # 387.5nm/2.130 --> 181.924 nm
 
   
-#L1 = [0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866]
+L1 = [0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866]
 
-#L2 = [0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924]
+L2 = [0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924]
 
-L1 = [10,10,10,10,10,10,10]
-L2 = [0,0,0,0,0,0,0]
+#L1 = [10,10,10,10,10,10,10]
+#L2 = [0,0,0,0,0,0,0]
  
 mm = len(L1)
 
@@ -50,8 +52,6 @@ no = 1.000
 
 wlcol = np.zeros(nn)
 TPcol = np.zeros(nn)
-
-
 
 
 for ii in range(nn):
@@ -84,6 +84,19 @@ print('Power = ')
 print(TPcol)
 
 
+fig = plt.figure(figsize = (10,4), facecolor='lightblue')
+
+ax1 = fig.add_subplot(1, 2, 1)
+ax2 = fig.add_subplot(1, 2, 2)
+
+ax1.plot(wlcol,TPcol)
+ax1.set_xlabel("Wavelength")
+ax1.set_ylabel("Power")
+#ax1.set_ylim(0,2)
+ax1.grid()
+
+
+plt.show()
 
 #fig1 = figure(1)
 #set(fig1,'Position',[10 200 300 300])
