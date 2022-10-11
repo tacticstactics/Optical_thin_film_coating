@@ -52,7 +52,8 @@ no = 1.000
 
 wlcol = np.zeros(nn)
 TPcol = np.zeros(nn)
-TPdBcol = np.zeros(nn)
+PTdBcol = np.zeros(nn)
+PRdBcol = np.zeros(nn)
 
 for ii in range(nn):
     
@@ -73,16 +74,20 @@ for ii in range(nn):
         E_intermedate = Thinlayer_def.dielectric(wl, n1, n2, th1, th2, Ein)
         Ein = E_intermedate
             
-    TP1 = abs(E_intermedate[0,0])**2
-            
-    TPcol[ii] = TP1
-    TPdBcol[ii] = 10*np.log(TP1)
+    PT1 = abs(E_intermedate[0,0])**2
+    PR1 = abs(E_intermedate[1,0])**2
+    
+    TPcol[ii] = PT1
+    PTdBcol[ii] = 10*np.log(PT1)
+    PRdBcol[ii] = 10*np.log(PR1)
 
-print('Wavelength = ')
-print(wlcol)
 
-print('Power = ')
-print(TPcol)
+
+#print('Wavelength = ')
+#print(wlcol)
+
+#print('Power = ')
+#print(TPcol)
 
 
 fig = plt.figure(figsize = (10,4), facecolor='lightblue')
@@ -90,12 +95,13 @@ fig = plt.figure(figsize = (10,4), facecolor='lightblue')
 ax1 = fig.add_subplot(1, 2, 1)
 ax2 = fig.add_subplot(1, 2, 2)
 
-ax1.plot(wlcol,TPdBcol)
+ax1.plot(wlcol,PTdBcol)
 ax1.set_xlabel("Wavelength")
 ax1.set_ylabel("Power")
 #ax1.set_ylim(0,2)
 ax1.grid()
 
+ax2.plot(wlcol,PRdBcol)
 
 plt.show()
 
