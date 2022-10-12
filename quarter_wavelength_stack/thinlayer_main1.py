@@ -37,8 +37,12 @@ no = 1.000 #refractive Index
 
 wlcol = np.zeros(nn)
 PTcol = np.zeros(nn)
-PTdBcol = np.zeros(nn)
-PRdBcol = np.zeros(nn)
+P1dBcol = np.zeros(nn)
+P2dBcol = np.zeros(nn)
+P3dBcol = np.zeros(nn)
+P4dBcol = np.zeros(nn)
+
+
 
 for ii in range(nn):
 
@@ -46,7 +50,7 @@ for ii in range(nn):
     
     wl = startwl + stepwl*ii
     wlcol[ii] = wl
-    print(wl)
+    #print(wl)
 
     n1 = 1.463 + 0.003827/(wl**2) + 0.000/(wl**4)
     n2 = 2.1305 + 0.018499/(wl**2) + 0.00199850/(wl**4)
@@ -55,22 +59,25 @@ for ii in range(nn):
 
     for jj in range(mm):
 
-        print(jj)
+        #print(jj)
 
         th1 = L1[jj]
         th2 = L2[jj]           
 
         E_intermedate = Thinlayer_def.dielectric(wl, n1, n2, th1, th2, Ein)
         Ein = E_intermedate
+        #print(E_intermedate)
             
-    PT1 = abs(E_intermedate[0,0])**2
-    PR1 = abs(E_intermedate[1,0])**2
-    
-    PTcol[ii] = PT1
-    PTdBcol[ii] = -10*np.log(PT1)
-    PRdBcol[ii] = 10*np.log(PR1)
+    P1 = abs(E_intermedate[0,0])**2
+    P2 = abs(E_intermedate[1,0])**2
+    P3 = abs(E_intermedate[1,0])**2
+    P4 = abs(E_intermedate[1,1])**2
 
-
+    PTcol[ii] = P1
+    P1dBcol[ii] = -10*np.log(P1)
+    P2dBcol[ii] = 10*np.log(P2)
+    P3dBcol[ii] = 10*np.log(P3)
+    P4dBcol[ii] = -10*np.log(P4)
 
 #print('Wavelength = ')
 #print(wlcol)
@@ -81,16 +88,20 @@ for ii in range(nn):
 
 fig = plt.figure(figsize = (10,4), facecolor='lightblue')
 
-ax1 = fig.add_subplot(1, 2, 1)
-ax2 = fig.add_subplot(1, 2, 2)
+ax1 = fig.add_subplot(2, 2, 1)
+ax2 = fig.add_subplot(2, 2, 2)
+ax3 = fig.add_subplot(2, 2, 3)
+ax4 = fig.add_subplot(2, 2, 4)
 
-ax1.plot(wlcol,PTdBcol)
+ax1.plot(wlcol,P1dBcol)
 ax1.set_xlabel("Wavelength")
 ax1.set_ylabel("Power")
 #ax1.set_ylim(0,2)
 ax1.grid()
 
-ax2.plot(wlcol,PRdBcol)
+ax2.plot(wlcol,P2dBcol)
+ax3.plot(wlcol,P3dBcol)
+ax4.plot(wlcol,P4dBcol)
 
 plt.show()
 

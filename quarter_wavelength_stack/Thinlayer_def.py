@@ -28,7 +28,7 @@ def dielectric(wl, n1, n2, th1, th2, Ein):
     E3 = np.dot(T2,E2)
     E4 = np.dot(D12,E3)
 
-    #Eout = E3 #        Eout = D12*T2*D21*Eini # each 
+    #Eout = (D12*T2*D21*T1)**m
     
  
     Eout = E4
