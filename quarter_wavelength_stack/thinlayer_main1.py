@@ -36,75 +36,62 @@ no = 1.000 #refractive Index
 
 
 wlcol = np.zeros(nn)
-PTcol = np.zeros(nn)
 P1dBcol = np.zeros(nn)
 P2dBcol = np.zeros(nn)
-P3dBcol = np.zeros(nn)
-P4dBcol = np.zeros(nn)
 
 
+Ein = np.array([[1],[0]]) 
 
-for ii in range(nn):
-
-    Ein = np.array([[1,0],[0,1]])
+for ii in range(nn):   
     
-    wl = startwl + stepwl*ii
-    wlcol[ii] = wl
-    #print(wl)
+   wl = startwl + stepwl*ii
+   wlcol[ii] = wl
+   #print(wl)
 
-    n1 = 1.463 + 0.003827/(wl**2) + 0.000/(wl**4)
-    n2 = 2.1305 + 0.018499/(wl**2) + 0.00199850/(wl**4)
-    #ns = 1.6553 + 0.0086444/(wl**2) + 0.00081178/(wl**4)
-    
+   n1 = 1.463 + 0.003827/(wl**2) + 0.000/(wl**4)
+   n2 = 2.1305 + 0.018499/(wl**2) + 0.00199850/(wl**4)
+   #ns = 1.6553 + 0.0086444/(wl**2) + 0.00081178/(wl**4)
+   
+   TMin = np.array([[1,0],[0,1]]) 
 
-    for jj in range(mm):
+   for jj in range(mm):
 
         #print(jj)
 
         th1 = L1[jj]
         th2 = L2[jj]           
 
-        E_intermedate = Thinlayer_def.dielectric(wl, n1, n2, th1, th2, Ein)
-        Ein = E_intermedate
+        TM_intermedate = Thinlayer_def.dielectric(wl, n1, n2, th1, th2, TMin)
+        TMin = TM_intermedate
         #print(E_intermedate)
-            
-    P1 = abs(E_intermedate[0,0])**2
-    P2 = abs(E_intermedate[1,0])**2
-    P3 = abs(E_intermedate[1,0])**2
-    P4 = abs(E_intermedate[1,1])**2
+    
+   TMout = TM_intermedate
+    
+   Eout2 = np.dot(TMout, Ein)
 
-    PTcol[ii] = P1
-    P1dBcol[ii] = -10*np.log(P1)
-    P2dBcol[ii] = 10*np.log(P2)
-    P3dBcol[ii] = 10*np.log(P3)
-    P4dBcol[ii] = -10*np.log(P4)
+   Eout2_x = Eout2[0,0]
+   Eout2_y = Eout2[1,0]
+   
+   Pow1 = np.abs(Eout2_x)**2
+   Pow2 = np.abs(Eout2_y)**2  
 
-#print('Wavelength = ')
-#print(wlcol)
-
-#print('Power = ')
-#print(TPcol)
+   P1dBcol[ii] = -10*np.log(Pow1)
+   P2dBcol[ii] = 10*np.log(Pow2)
 
 
-fig = plt.figure(figsize = (10,4), facecolor='lightblue')
+fig = plt.figure(figsize = (8,4), facecolor='lightblue')
 
-ax1 = fig.add_subplot(2, 2, 1)
-ax2 = fig.add_subplot(2, 2, 2)
-ax3 = fig.add_subplot(2, 2, 3)
-ax4 = fig.add_subplot(2, 2, 4)
+ax1 = fig.add_subplot(2, 1, 1)
+ax2 = fig.add_subplot(2, 1, 2)
 
 ax1.plot(wlcol,P1dBcol)
 ax1.set_xlabel("Wavelength")
 ax1.set_ylabel("Power")
-#ax1.set_ylim(0,2)
 ax1.grid()
 
 ax2.plot(wlcol,P2dBcol)
-ax3.plot(wlcol,P3dBcol)
-ax4.plot(wlcol,P4dBcol)
+ax2.grid()
+ax2.set_xlabel("Wavelength")
 
 plt.show()
 
-#fig1 = figure(1)
-#set(fig1,'Position',[10 200 300 300])
-#plot(wlcol,10*log10(outputPcol),'r-');grid on;

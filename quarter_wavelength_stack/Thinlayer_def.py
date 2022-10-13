@@ -31,6 +31,6 @@ def dielectric(wl, n1, n2, th1, th2, Ein):
     #Eout = (D12*T2*D21*T1)**m
     
  
-    Eout = E4
+    Eout1 = E4
 
-    return Eout
+    return Eout1
