@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>1daabd4a-59d3-4e48-bf23-d4f18ed0c7de</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>Antireflection_1.py</StartupFile>
+    <StartupFile>Antireflection_main.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -21,7 +21,8 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Antireflection_1.py" />
+    <Compile Include="Antireflection_main.py" />
+    <Compile Include="Antireflection_def.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
