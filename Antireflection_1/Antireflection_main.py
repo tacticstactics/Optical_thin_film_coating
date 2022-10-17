@@ -35,15 +35,17 @@ print(ll)
   global dBTcol 
   global dBRcol 
 
-  wlcol= zeros(mm,1);
-  dBTcol=zeros(mm,1);
-  dBRcol=zeros(mm,1);
+  wlcol= np.zeros(mm,1);
+  dBTcol=np.zeros(mm,1);
+  dBRcol=np.zeros(mm,1);
 
  Mjj = [];
  
- for ii = 1:mm,
-    wl = startwl + stepwl *ii;
-    wlcol(ii,1) = wl;
+ for ii = 1:mm:
+
+    wl = startwl + stepwl *ii
+
+    wlcol(ii,1) = wl
     
      nL = 1.463 + 0.003827/(wl.^2) + 0.000./(wl.^4);
      nH = 2.1305 + 0.018499/(wl.^2) + 0.00199850./(wl.^4);
@@ -67,7 +69,7 @@ print(ll)
    		end
 
      h(kk) =  (centerwl ./ n) .* thkpara(kk);   # thickness is quarter !!!
-     sigma = 2*pi*n*h(kk) / wl;   
+     sigma = 2 * math.p i *n*h(kk) / wl;   
         
    	Mjj = [math.cos(sigma), 1j*math.sin(sigma) / n;
       1j*n * math.sin(sigma), math.cos(sigma)]; 
@@ -96,5 +98,7 @@ print(ll)
   r = (n0*B - C) ./ (n0 * B + C);
   R = r * conj(r);
   
-  dBRcol(ii,1) = 10*log10(R);
+  dBRcol(ii,1) = 10*log10(R)
+
+
   
