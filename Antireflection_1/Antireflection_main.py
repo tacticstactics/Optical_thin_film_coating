@@ -28,58 +28,54 @@ len_layer1 = len(layer1)
 print('Length of L1 = ')
 print(len_layer1)
 
-wlcol= np.zeros(mm,1)
-P1dBcol=np.zeros(mm,1)
-P2dBcol=np.zeros(mm,1)
+wlcol= np.zeros(mm)
+P1dBcol=np.zeros(mm)
+P2dBcol=np.zeros(mm)
  
 
 for ii in range(mm):   
 
     wl = startwl + stepwl *ii
-    wlcol[ii,1] = wl
+    wlcol[ii] = wl
 
     TMin = np.array([[1,0],[0,1]])
     
     n0 = 1
     ns = 1.463 + 0.003827/(wl**2) + 0.000/(wl**4)
-    
+
 
     for kk in range(len_layer1):
 
         n_index = layer1[kk]
         thickness1 = thkpara[kk]
 
-        TM_intermediate = Antireflection_def.transfermatrix(wl, n_index, thickness1, TMin)
+        TM_intermediate = Antireflection_def.transfermatrix(wl, n_index, thickness1)
 
         TMin = TM_intermediate
         #inner loop ended
-        
+
     TMout = TM_intermediate
 
     print(TMout)
 
-    #     m11 = TMout[0,0]
-    #     m12 = TMout[0,1]
-    #     m21 = TMout[1,0]
-    #     m22 = TMout[1,1]
-
+    m11 = TMout[0,0]
+    m12 = TMout[0,1]
+    m21 = TMout[1,0]
+    m22 = TMout[1,1]
+    
+    B = m11 + m12*ns
+    C = m21 + m22 * ns
+     
+    er = (n0*B - C) / (n0 * B + C)     
+    et = (2*n0) / ((m11 + m12*ns)*n0 + (m21 + m22*ns))
+     
      
 
-
-       #B = m11 + m12*ns
-       #C = m21 + m22 * ns
+    Pow1 = np.abs(er)**2
+    Pow2 = np.abs(et)**2 * ns/n0
        
-       #er = (n0*B - C) / (n0 * B + C)     
-       #et = (2*n0) / ((m11 + m12*ns)*n0 + (m21 + m22*ns))
-       
-       er = 1
-       et = 0
-
-       Pow1 = np.abs(er)**2
-       Pow2 = np.abs(et)**2 * ns/n0
-       
-       P1dBcol[ii] = -10*np.log(Pow1)
-       P2dBcol[ii] = 10*np.log(Pow2)
+    P1dBcol[ii] = -10*np.log(Pow1)
+    P2dBcol[ii] = 10*np.log(Pow2)
 
     #outer loop ended
 
