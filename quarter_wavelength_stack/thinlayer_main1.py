@@ -69,7 +69,7 @@ for ii in range(nn):
     
    Eout2 = np.dot(TMout, Ein)
 
-   Eout2_x = Eout2[0,0]
+   Eout2_x = Eout2[0,0]   
    Eout2_y = Eout2[1,0]
    
    Pow1 = np.abs(Eout2_x)**2

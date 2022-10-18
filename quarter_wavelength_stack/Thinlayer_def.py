@@ -14,6 +14,10 @@ def dielectric(wl, n1, n2, th1, th2, Ein):
     D21 = np.array([[(n1+n2)/(2*np.sqrt(n1*n2)), (n2-n1)/(2*np.sqrt(n1*n2))],[(n2-n1)/(2*np.sqrt(n1*n2)), (n1+n2)/(2*np.sqrt(n1*n2))]]);
     D12 = np.array([[(n1+n2)/(2*np.sqrt(n1*n2)), (n1-n2)/(2*np.sqrt(n1*n2))],[(n1-n2)/(2*np.sqrt(n1*n2)), (n1+n2)/(2*np.sqrt(n1*n2))]]);
 
+    #D21 = np.array([[(n1+n2), (n2-n1)],[(n2-n1), (n1+n2)]]);
+    #D12 = np.array([[(n1+n2), (n1-n2)],[(n1-n2), (n1+n2)]]);
+
+
     #D21 = (1/(2*np.sqrt(n1*n2)))* np.array([[n1+n2, n2-n1],[n2-n1, n1+n2]]);
     #D12 = (1/(2*np.sqrt(n1*n2)))* np.array([[n1+n2, n1-n2],[n1-n2, n1+n2]]);
 
