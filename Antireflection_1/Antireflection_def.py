@@ -3,6 +3,7 @@
 import numpy as np
 import math
 
+def transfermatrix(wl, n1, n2, th1, th2, Ein):
 
 m11 = Morig(1,1);
      m12 = Morig(1,2);

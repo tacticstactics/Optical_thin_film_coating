@@ -10,9 +10,14 @@ import Antireflection_def
  # thin_AR_func.m
  # L -> 0;	H ->	1;
 
- function [wlcol,dBTcol,dBRcol] = ...
-    thin_AR_func(startwl,stepwl,centerwl,mm,layer,thkpara); 
- global c;
+ #function [wlcol,dBTcol,dBRcol] = ...
+ #   thin_AR_func(startwl,stepwl,centerwl,mm,layer,thkpara); 
+ #global c;
+
+startwl = 1.200 # [um]
+stepwl = 0.002 # [um]
+
+nn = 512 # number of sampling point
 
  
  
@@ -20,15 +25,14 @@ import Antireflection_def
  n0 = 1.000;
 
 
- layer = np.array([0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866])
+ layer1 = np.array([0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866])
 
-L2 = [0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924]
+ L2 = np.array([0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924])
 
  
-ll = len(L1)
-
-print('Length of L1 = ')
-print(ll)
+ len_layer1 = len(layer1)
+ print('Length of L1 = ')
+ print(len_layer1)
  
   
   global wlcol 
@@ -53,11 +57,49 @@ print(ll)
 	#nLN = sqrt(2.23413 + ((2.68312-wl.^2)/(wl.^2-0.04481)) + ((2.59121.* wl)/(wl - 109.776)));
  
   #substrate: quartz
-
- ns = nQuartz;
+  ns = nQuartz;
+ 
   
- for kk = 1:ll;
+ for kk = 1:ll:
        
+         TM_intermedate = Antireflection_def.transfermatrix(wl, n1, n2, th1, th2, TMin)
+
+       #print(jj)
+
+        th1 = L1[jj]
+        th2 = L2[jj]           
+
+        TM_intermedate = Thinlayer_def.dielectric(wl, n1, n2, th1, th2, TMin)
+        TMin = TM_intermedate
+        #print(E_intermedate)
+    
+   TMout = TM_intermedate
+    
+   Eout2 = np.dot(TMout, Ein)
+
+   Eout2_x = Eout2[0,0]
+   Eout2_y = Eout2[1,0]
+   
+   Pow1 = np.abs(Eout2_x)**2
+   Pow2 = np.abs(Eout2_y)**2  
+
+   P1dBcol[ii] = -10*np.log(Pow1)
+   P2dBcol[ii] = 10*np.log(Pow2)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
        	if layer(kk) == 0
 	        n = nL; #% L 
      	   
@@ -101,4 +143,18 @@ print(ll)
   dBRcol(ii,1) = 10*log10(R)
 
 
-  
+fig = plt.figure(figsize = (8,4), facecolor='lightblue')
+
+ax1 = fig.add_subplot(2, 1, 1)
+ax2 = fig.add_subplot(2, 1, 2)
+
+ax1.plot(wlcol,P1dBcol)
+ax1.set_xlabel("Wavelength")
+ax1.set_ylabel("Power")
+ax1.grid()
+
+ax2.plot(wlcol,P2dBcol)
+ax2.grid()
+ax2.set_xlabel("Wavelength")
+
+plt.show()
