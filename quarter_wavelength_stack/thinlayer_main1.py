@@ -4,6 +4,7 @@
 #2022/10/7
 # Takeshi Ozeki, Optical Curcit. p.89 multilayer dielectric film filters
 
+import cmath
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -38,7 +39,8 @@ n0 = 1.000 #refractive Index
 wlcol = np.zeros(nn)
 P1dBcol = np.zeros(nn)
 P2dBcol = np.zeros(nn)
-
+P1_phasecol = np.zeros(nn)
+P2_phasecol = np.zeros(nn)
 
 Ein = np.array([[1],[0]]) 
 
@@ -72,7 +74,7 @@ for ii in range(nn):
    TMout = TM_intermedate
     
    detTMout = np.linalg.det(TMout)
-   print("det = ", detTMout)
+   #print("det = ", detTMout)
 
 
    Eout2 = np.dot(TMout, Ein)
@@ -81,9 +83,17 @@ for ii in range(nn):
    Eout2_y = Eout2[1,0]
    
    Pow1 = np.abs(Eout2_x)**2
+   P1_Phase = cmath.phase(Eout2_x)
+   P1_phasecol[ii] = P1_Phase
+
+
 
    coef1 = mm*2
    Pow2 = (n1/n2)**coef1 * np.abs(Eout2_y)**2  
+
+   P2_Phase = cmath.phase(Eout2_y)
+   P2_phasecol[ii] = P2_Phase
+
 
    P1dBcol[ii] = -10*np.log(Pow1)
    P2dBcol[ii] = 10*np.log(Pow2)
@@ -91,17 +101,25 @@ for ii in range(nn):
 
 fig = plt.figure(figsize = (8,4), facecolor='lightblue')
 
-ax1 = fig.add_subplot(2, 1, 1)
-ax2 = fig.add_subplot(2, 1, 2)
+ax1 = fig.add_subplot(2, 2, 1)
+ax2 = fig.add_subplot(2, 2, 2)
+ax3 = fig.add_subplot(2, 2, 3)
+ax4 = fig.add_subplot(2, 2, 4)
 
 ax1.plot(wlcol,P1dBcol)
+
 ax1.set_xlabel("Wavelength")
 ax1.set_ylabel("Power")
 ax1.grid()
 
-ax2.plot(wlcol,P2dBcol)
-ax2.grid()
-ax2.set_xlabel("Wavelength")
+ax2.plot(wlcol,P1_phasecol)
+
+
+ax3.plot(wlcol,P2dBcol)
+ax3.grid()
+ax3.set_xlabel("Wavelength")
+
+ax4.plot(wlcol,P2_phasecol)
 
 plt.show()
 
