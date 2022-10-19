@@ -22,8 +22,7 @@ def dielectric(wl, n1, n2, th1, th2, Ein):
     #D12 = (1/(2*np.sqrt(n1*n2)))* np.array([[n1+n2, n1-n2],[n1-n2, n1+n2]]);
 
 
-
-    #n2 > n1
+    #Assuming n2 > n1
 
     # T matrix
 

@@ -16,9 +16,9 @@ stepwl = 0.002 # [um]
 nn = 512 # number of sampling point
 
 # Asssume quarter waelength
-# 1550nm * 0.25 --> 387.5 nm
-# 387.5nm/1.463 --> 264.866 nm
-# 387.5nm/2.130 --> 181.924 nm
+# 1550nm * 0.25 --> 387.5 nm (Air)
+# 387.5nm/1.463 --> 264.866 nm (nL)
+# 387.5nm/2.130 --> 181.924 nm (nH)
 
   
 L1 = [0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866]
@@ -32,7 +32,7 @@ print('Length of L1 = ')
 print(mm)
 
 
-no = 1.000 #refractive Index
+n0 = 1.000 #refractive Index
 
 
 wlcol = np.zeros(nn)
@@ -52,8 +52,12 @@ for ii in range(nn):
    n2 = 2.1305 + 0.018499/(wl**2) + 0.00199850/(wl**4)
    #ns = 1.6553 + 0.0086444/(wl**2) + 0.00081178/(wl**4)
    
-   TMin = np.array([[1,0],[0,1]]) 
+   TM_eye = np.array([[1,0],[0,1]]) 
 
+   D01 = np.array([[(n0+n1)/(2*np.sqrt(n0*n1)), (n1-n0)/(2*np.sqrt(n0*n1))],[(n1-n0)/(2*np.sqrt(n0*n1)), (n0+n1)/(2*np.sqrt(n0*n1))]]);
+
+   TMin = np.dot(D01, TM_eye)
+   
    for jj in range(mm):
 
         #print(jj)
@@ -67,13 +71,17 @@ for ii in range(nn):
     
    TMout = TM_intermedate
     
+   detTMout = np.linalg.det(TMout)
+   print("det = ", detTMout)
+
+
    Eout2 = np.dot(TMout, Ein)
 
    Eout2_x = Eout2[0,0]   
    Eout2_y = Eout2[1,0]
    
    Pow1 = np.abs(Eout2_x)**2
-   Pow2 = np.abs(Eout2_y)**2  
+   Pow2 = (n1/n2)**(2*mm) * np.abs(Eout2_y)**2  
 
    P1dBcol[ii] = -10*np.log(Pow1)
    P2dBcol[ii] = 10*np.log(Pow2)

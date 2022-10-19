@@ -72,15 +72,12 @@ for ii in range(mm):
     m21 = TMout[1,0]
     m22 = TMout[1,1]
     
-    B = m11 + m12 * ns
-    C = m21 + m22 * ns
      
-    er = (n0*B - C) / (n0 * B + C)     
-    et = (2*n0) / ((m11 + m12*ns)*n0 + (m21 + m22*ns))     
+    s12 = 1/m22
      
 
-    P1 = np.abs(er)**2
-    P2 = np.abs(et)**2 * ns/n0
+    P1 = np.abs(s12)**2
+    P2 = 1
     
     
     P1col[ii] = P1
@@ -100,12 +97,12 @@ ax1.plot(wlcol,P1col)
 ax1.set_xlabel("Wavelength")
 ax1.set_ylabel("Power")
 ax1.grid()
-ax1.set_ylim(0,1)
+#ax1.set_ylim(0,1)
 
 ax2.plot(wlcol,P2col)
 ax2.grid()
 ax2.set_xlabel("Wavelength")
 ax2.set_ylabel("Power")
-ax2.set_ylim(0,1)
+#ax2.set_ylim(0,1)
 
 plt.show()
