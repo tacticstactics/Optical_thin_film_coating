@@ -20,7 +20,7 @@ stepwl = 0.002 # [um]
 
 mm = 512 # number of sampling point
 
-layer1 = np.array([1, 2, 1, 2])
+layer1 = np.array([0, 1, 2, 1])
 
 thkpara = np.array([0.181924, 0.181924, 0.181924, 0.181924])
 
@@ -29,6 +29,10 @@ print('Length of L1 = ')
 print(len_layer1)
 
 wlcol= np.zeros(mm)
+
+P1col=np.zeros(mm)
+P2col=np.zeros(mm)
+
 P1dBcol=np.zeros(mm)
 P2dBcol=np.zeros(mm)
  
@@ -46,10 +50,10 @@ for ii in range(mm):
 
     for kk in range(len_layer1):
 
-        n_index = layer1[kk]
+        n_name = layer1[kk]
         thickness1 = thkpara[kk]
 
-        TM_intermediate = Antireflection_def.transfermatrix(wl, n_index, thickness1)
+        TM_intermediate = Antireflection_def.transfermatrix(wl, n_name, thickness1)
 
         TMin = TM_intermediate
         #inner loop ended
@@ -57,25 +61,33 @@ for ii in range(mm):
     TMout = TM_intermediate
 
     print(TMout)
+    print("")
+
+    detTMout = np.linalg.det(TMout)
+    print("det = ", detTMout)
+
 
     m11 = TMout[0,0]
     m12 = TMout[0,1]
     m21 = TMout[1,0]
     m22 = TMout[1,1]
     
-    B = m11 + m12*ns
+    B = m11 + m12 * ns
     C = m21 + m22 * ns
      
     er = (n0*B - C) / (n0 * B + C)     
-    et = (2*n0) / ((m11 + m12*ns)*n0 + (m21 + m22*ns))
-     
+    et = (2*n0) / ((m11 + m12*ns)*n0 + (m21 + m22*ns))     
      
 
-    Pow1 = np.abs(er)**2
-    Pow2 = np.abs(et)**2 * ns/n0
-       
-    P1dBcol[ii] = -10*np.log(Pow1)
-    P2dBcol[ii] = 10*np.log(Pow2)
+    P1 = np.abs(er)**2
+    P2 = np.abs(et)**2 * ns/n0
+    
+    
+    P1col[ii] = P1
+    P2col[ii] = P2
+
+    P1dBcol[ii] = -10*np.log(P1)
+    P2dBcol[ii] = 10*np.log(P2)
 
     #outer loop ended
 
@@ -84,13 +96,16 @@ fig = plt.figure(figsize = (8,4), facecolor='lightblue')
 ax1 = fig.add_subplot(2, 1, 1)
 ax2 = fig.add_subplot(2, 1, 2)
 
-ax1.plot(wlcol,P1dBcol)
+ax1.plot(wlcol,P1col)
 ax1.set_xlabel("Wavelength")
 ax1.set_ylabel("Power")
 ax1.grid()
+ax1.set_ylim(0,1)
 
-ax2.plot(wlcol,P2dBcol)
+ax2.plot(wlcol,P2col)
 ax2.grid()
 ax2.set_xlabel("Wavelength")
+ax2.set_ylabel("Power")
+ax2.set_ylim(0,1)
 
 plt.show()

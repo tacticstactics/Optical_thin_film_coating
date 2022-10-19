@@ -5,7 +5,7 @@ import math
 
 
 
-def transfermatrix(wl, n_index, th1):
+def transfermatrix(wl, n_name, th1):
 
     nL = 1.463 + 0.003827/(wl**2) + 0.000/(wl**4)
     nH = 2.1305 + 0.018499/(wl**2) + 0.00199850/(wl**4)
@@ -14,19 +14,23 @@ def transfermatrix(wl, n_index, th1):
  
     #substrate: quartz
   
-    match n_index:
-
+    match n_name:
+        
+        case 0:
+            n_index = 1
         case 1:
             n_index = nL
         case 2:
             n_index = nH
 
+        
 
-    sigma = 2 * math.pi *n_index*th1/wl
-
-   	#Mjj = np.array([[math.cos(sigma), ],[np.exp(1j*n1 * math.sin(sigma)), math.cos(sigma)]])
+    sigma = 2 * math.pi * n_index * th1/wl
+   	
    	
     TM_intermedate = np.array([[math.cos(sigma),np.exp(1j)*math.sin(sigma)/n_index],[np.exp(1j)*math.sin(sigma)/n_index,math.cos(sigma)]])
+
+    #TM_intermedate = np.array([[1, 0],[0,1]])
 
     return TM_intermedate
 
