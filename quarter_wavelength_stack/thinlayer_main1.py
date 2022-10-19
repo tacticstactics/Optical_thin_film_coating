@@ -81,7 +81,9 @@ for ii in range(nn):
    Eout2_y = Eout2[1,0]
    
    Pow1 = np.abs(Eout2_x)**2
-   Pow2 = (n1/n2)**(2*mm) * np.abs(Eout2_y)**2  
+
+   coef1 = mm*2
+   Pow2 = (n1/n2)**coef1 * np.abs(Eout2_y)**2  
 
    P1dBcol[ii] = -10*np.log(Pow1)
    P2dBcol[ii] = 10*np.log(Pow2)
