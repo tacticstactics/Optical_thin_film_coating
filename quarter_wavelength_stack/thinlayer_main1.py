@@ -4,6 +4,7 @@
 #2022/10/7
 # Takeshi Ozeki, Optical Curcit. p.89 multilayer dielectric film filters
 
+import math
 import cmath
 import numpy as np
 import matplotlib.pyplot as plt
@@ -56,7 +57,7 @@ for ii in range(nn):
    
    TM_eye = np.array([[1,0],[0,1]]) 
 
-   D01 = np.array([[(n0+n1)/(2*np.sqrt(n0*n1)), (n1-n0)/(2*np.sqrt(n0*n1))],[(n1-n0)/(2*np.sqrt(n0*n1)), (n0+n1)/(2*np.sqrt(n0*n1))]]);
+   D01 = np.array([[(n0+n1)/(2*np.sqrt(n0*n1)), (n1-n0)/(2*np.sqrt(n0*n1))],[(n1-n0)/(2*np.sqrt(n0*n1)), (n0+n1)/(2*np.sqrt(n0*n1))]]);# Air to n1 material (typically SiO2)
 
    TMin = np.dot(D01, TM_eye)
    
@@ -71,27 +72,35 @@ for ii in range(nn):
         TMin = TM_intermedate
         #print(E_intermedate)
     
-   TMout = TM_intermedate
+   TM_stack = TM_intermedate
     
-   detTMout = np.linalg.det(TMout)
+   detTMout = np.linalg.det(TM_stack) # Verify det is unity.
    #print("det = ", detTMout)
 
+   Eout1 = np.dot(TM_stack, Ein)
 
-   Eout2 = np.dot(TMout, Ein)
+   T_substrate = np.array([[np.exp(-1j*n1*0.0001*2*math.pi/wl), 0], [0, np.exp(1j*n1*0.0001*2*math.pi/wl)]]);
 
-   Eout2_x = Eout2[0,0]   
-   Eout2_y = Eout2[1,0]
+   Eout2 = np.dot(T_substrate, Eout1)
+
+   D10 = np.array([[(n1+n0)/(2*np.sqrt(n0*n1)), (n0-n1)/(2*np.sqrt(n0*n1))],[(n0-n1)/(2*np.sqrt(n0*n1)), (n1+n0)/(2*np.sqrt(n0*n1))]]);# n1 material (typically SiO2) to Air
+
+   Eout3 = np.dot(D10, Eout2)
+
+
+   Eout3_x = Eout3[0,0]   
+   Eout3_y = Eout3[1,0]
    
-   Pow1 = np.abs(Eout2_x)**2
-   P1_Phase = cmath.phase(Eout2_x)
+   Pow1 = np.abs(Eout3_x)**2
+   P1_Phase = cmath.phase(Eout3_x)
    P1_phasecol[ii] = P1_Phase
 
 
 
-   coef1 = mm*2
-   Pow2 = (n1/n2)**coef1 * np.abs(Eout2_y)**2  
+   coef1 = mm*2+2
+   Pow2 = (n1/n2)**coef1 * np.abs(Eout3_y)**2  
 
-   P2_Phase = cmath.phase(Eout2_y)
+   P2_Phase = cmath.phase(Eout3_y)
    P2_phasecol[ii] = P2_Phase
 
 
