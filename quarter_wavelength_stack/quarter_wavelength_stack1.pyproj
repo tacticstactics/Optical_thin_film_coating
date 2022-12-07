@@ -5,7 +5,7 @@
     <ProjectGuid>7e0d0097-acbd-4e03-baaa-d149304c3b0a</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>Thinlayer_main1.py</StartupFile>
+    <StartupFile>thinlayer_main1.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,8 +22,8 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Thinlayer_def.py" />
-    <Compile Include="Thinlayer_main1.py" />
+    <Compile Include="thinlayer_def.py" />
+    <Compile Include="thinlayer_main1.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

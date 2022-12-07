@@ -68,7 +68,7 @@ for ii in range(nn):
         th1 = L1[jj]
         th2 = L2[jj]           
 
-        TM_intermedate = Thinlayer_def.dielectric(wl, n1, n2, th1, th2, TMin)
+        TM_intermedate = thinlayer_def.dielectric(wl, n1, n2, th1, th2, TMin)
         TMin = TM_intermedate
         #print(E_intermedate)
     
