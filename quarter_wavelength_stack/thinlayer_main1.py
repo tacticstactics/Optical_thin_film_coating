@@ -9,7 +9,7 @@ import cmath
 import numpy as np
 import matplotlib.pyplot as plt
 
-import Thinlayer_def
+import thinlayer_def
 
 
 startwl = 1.200 # [um]
