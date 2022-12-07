@@ -34,7 +34,7 @@ print('Length of L1 = ')
 print(mm)
 
 
-n0 = 1.000 #refractive Index
+n0 = 1.000 #refractive Index of Air
 
 
 wlcol = np.zeros(nn)
