@@ -1,16 +1,12 @@
 
-
 #Thinlayer_main1.py
 #2022/10/7
 # Takeshi Ozeki, Optical Curcit. p.89 multilayer dielectric film filters
 
-import math
-import cmath
 import numpy as np
 import matplotlib.pyplot as plt
 
 import thinlayer_def
-
 
 startwl = 1.200 # [um]
 stepwl = 0.002 # [um]
@@ -27,15 +23,12 @@ L1 = [0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.264866, 0.26
 
 L2 = [0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924, 0.181924]
 
- 
 mm = len(L1)
 
 print('Length of L1 = ')
 print(mm)
 
-
 n0 = 1.000 #refractive Index of Air
-
 
 wlcol = np.zeros(nn)
 P1dBcol = np.zeros(nn)
@@ -79,7 +72,7 @@ for ii in range(nn):
 
    Eout1 = np.dot(TM_stack, Ein)
 
-   T_substrate = np.array([[np.exp(-1j*n1*0.0001*2*math.pi/wl), 0], [0, np.exp(1j*n1*0.0001*2*math.pi/wl)]]);
+   T_substrate = np.array([[np.exp(-1j*n1*0.0001*2*np.pi/wl), 0], [0, np.exp(1j*n1*0.0001*2*np.pi/wl)]]);
 
    Eout2 = np.dot(T_substrate, Eout1)
 
@@ -87,20 +80,18 @@ for ii in range(nn):
 
    Eout3 = np.dot(D10, Eout2)
 
-
    Eout3_x = Eout3[0,0]   
    Eout3_y = Eout3[1,0]
    
    Pow1 = np.abs(Eout3_x)**2
-   P1_Phase = cmath.phase(Eout3_x)
+   P1_Phase = np.angle(Eout3_x)
    P1_phasecol[ii] = P1_Phase
-
 
 
    coef1 = mm*2+2
    Pow2 = (n1/n2)**coef1 * np.abs(Eout3_y)**2  
 
-   P2_Phase = cmath.phase(Eout3_y)
+   P2_Phase = np.angle(Eout3_y)
    P2_phasecol[ii] = P2_Phase
 
 
@@ -133,4 +124,3 @@ ax4.plot(wlcol,P2_phasecol)
 ax4.grid()
 
 plt.show()
-
