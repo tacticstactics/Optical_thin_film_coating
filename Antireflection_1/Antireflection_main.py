@@ -15,8 +15,8 @@ import Antireflection_def
  #   thin_AR_func(startwl,stepwl,centerwl,mm,layer,thkpara); 
  #global c;
 
-startwl = 1.200 # [um]
-stepwl = 0.002 # [um]
+startwl = 0.02 # [um]
+stepwl = 0.001 # [um]
 
 mm = 512 # number of sampling point
 
@@ -93,16 +93,16 @@ fig = plt.figure(figsize = (8,4), facecolor='lightblue')
 ax1 = fig.add_subplot(2, 1, 1)
 ax2 = fig.add_subplot(2, 1, 2)
 
-ax1.plot(wlcol,P1col)
+ax1.plot(wlcol,P1dBcol)
 ax1.set_xlabel("Wavelength")
-ax1.set_ylabel("Power")
+ax1.set_ylabel("Power [dB]")
 ax1.grid()
 #ax1.set_ylim(0,1)
 
-ax2.plot(wlcol,P2col)
+ax2.plot(wlcol,P2dBcol)
 ax2.grid()
 ax2.set_xlabel("Wavelength")
-ax2.set_ylabel("Power")
+ax2.set_ylabel("Power [dB]")
 #ax2.set_ylim(0,1)
 
 plt.show()

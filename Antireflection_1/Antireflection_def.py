@@ -25,10 +25,10 @@ def transfermatrix(wl, n_name, th1):
 
         
 
-    sigma = 2 * math.pi * n_index * th1/wl
+    sigma = 2 * math.pi * n_index * th1/wl #phase [rad]
    	
    	
-    TM_intermedate = np.array([[math.cos(sigma),np.exp(1j)*math.sin(sigma)/n_index],[np.exp(1j)*math.sin(sigma)/n_index,math.cos(sigma)]])
+    TM_intermedate = np.array([[np.cos(sigma),np.exp(1j)*np.sin(sigma)/n_index],[np.exp(1j)*np.sin(sigma)/n_index,np.cos(sigma)]])
 
     #TM_intermedate = np.array([[1, 0],[0,1]])
 
