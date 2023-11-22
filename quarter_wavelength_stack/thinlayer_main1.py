@@ -117,10 +117,12 @@ ax2.set_ylabel("Phase")
 ax2.grid()
 
 ax3.plot(wlcol,P2dBcol)
-ax3.grid()
 ax3.set_xlabel("Wavelength")
+ax3.set_ylabel("Power")
+ax3.grid()
 
 ax4.plot(wlcol,P2_phasecol)
+ax4.set_ylabel("Phase")
 ax4.grid()
 
 plt.show()
