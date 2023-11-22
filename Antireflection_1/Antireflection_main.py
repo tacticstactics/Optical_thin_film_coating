@@ -85,13 +85,20 @@ for ii in range(mm):
 
     P1dBcol[ii] = -10*np.log(P1)
     P2dBcol[ii] = 10*np.log(P2)
+    
+    #P1_Phase = np.angle(Eout3_x)
+    #P1_phasecol[ii] = P1_Phase
+
 
     #outer loop ended
 
 
 fig = plt.figure(figsize = (8,4), facecolor='lightblue')
-ax1 = fig.add_subplot(2, 1, 1)
-ax2 = fig.add_subplot(2, 1, 2)
+ax1 = fig.add_subplot(2, 2, 1)
+ax2 = fig.add_subplot(2, 2, 2)
+ax3 = fig.add_subplot(2, 2, 3)
+ax4 = fig.add_subplot(2, 2, 4)
+
 
 ax1.plot(wlcol,P1dBcol)
 ax1.set_xlabel("Wavelength")
@@ -99,10 +106,12 @@ ax1.set_ylabel("Power [dB]")
 ax1.grid()
 #ax1.set_ylim(0,1)
 
-ax2.plot(wlcol,P2dBcol)
-ax2.grid()
-ax2.set_xlabel("Wavelength")
-ax2.set_ylabel("Power [dB]")
+
+
+ax3.plot(wlcol,P2dBcol)
+ax3.grid()
+ax3.set_xlabel("Wavelength")
+ax3.set_ylabel("Power [dB]")
 #ax2.set_ylim(0,1)
 
 plt.show()
