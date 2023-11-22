@@ -1,9 +1,6 @@
 #Antireflection_def.py
 
 import numpy as np
-import math
-
-
 
 def transfermatrix(wl, n_name, th1):
 
@@ -25,7 +22,7 @@ def transfermatrix(wl, n_name, th1):
 
         
 
-    sigma = 2 * math.pi * n_index * th1/wl #phase [rad]
+    sigma = 2 * np.pi * n_index * th1/wl #phase [rad]
    	
    	
     TM_intermedate = np.array([[np.cos(sigma),np.exp(1j)*np.sin(sigma)/n_index],[np.exp(1j)*np.sin(sigma)/n_index,np.cos(sigma)]])
